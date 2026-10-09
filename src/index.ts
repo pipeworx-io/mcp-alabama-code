@@ -808,7 +808,23 @@ function sliceSection(text: string, heading: RegExp, next: RegExp): string | nul
 }
 /**
  * Code of Alabama 1975 — state statutes by citation and by topic.
- * Fleet #2752.
+ * Fleet #2752. Query-arg fix: fleet #2901.
+ *
+ * SCHEMA DRIFT, 2026-10-09 (fleet #2901). ALISON renamed the boolean
+ * argument on `codesOfAlabama` from `versions` to `includeAllVersions` —
+ * every live call started failing with "Unknown argument \"versions\" on
+ * field \"Query.codesOfAlabama\"." GraphQL introspection is now DISABLED on
+ * this endpoint (it answers `__type`/`__schema` queries with "GraphQL
+ * introspection has been disabled"), so the current argument name was
+ * recovered the same way the original query was: pulled live out of the
+ * site's own Next.js chunk bundle (grep the chunk list from
+ * https://alison.legislature.state.al.us/code-of-alabama for
+ * "codesOfAlabama" — it currently lives in one `/_next/static/chunks/*.js`
+ * file, filename unstable across deploys, so re-grep it live rather than
+ * hardcoding one). If this breaks again, the loud
+ * `GraphQL endpoint rejected this query: Unknown argument "<name>" ...`
+ * error (see `pwGraphql` below) names the exact argument to look for next
+ * time — it never silently reshapes into `found: false`.
  *
  * SOURCE AND SHAPE. alison.legislature.state.al.us ("ALISON") is a Next.js
  * single-page app — the HTML shell carries no statute text (the trap the
@@ -950,7 +966,7 @@ const SECTION_QUERY = `
   query codeOfAlabamaSection($displayId: String!) {
     codesOfAlabama(
       where: { type: { eq: Section }, displayId: { eq: $displayId } }
-      versions: true
+      includeAllVersions: true
     ) {
       data {
         codeId
@@ -1069,7 +1085,7 @@ const SEARCH_QUERY = `
       where: { type: { eq: Section }, isContentNode: { eq: true } }
       limit: $limit
       offset: $offset
-      versions: true
+      includeAllVersions: true
     ) {
       data {
         displayId
@@ -1115,7 +1131,7 @@ async function alSearch(args: Record<string, unknown>) {
 
   // Only in-force rows (no effectiveDate) belong in a topic search — a
   // not-yet-effective future row would otherwise appear as a duplicate hit
-  // for the same citation under full-text search's `versions: true`.
+  // for the same citation under full-text search's `includeAllVersions: true`.
   const inForce = rows.filter((r) => !r.effectiveDate);
   const results = (inForce.length ? inForce : rows).map((r) => {
     const text = statuteText(r.content ?? '');

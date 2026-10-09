@@ -1,6 +1,6 @@
 {
   "name": "@pipeworx/mcp-alabama-code",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Code of Alabama 1975 — state statutes by citation and by topic.",
   "type": "module",
   "main": "src/index.ts",
@@ -26,7 +26,7 @@
     "@cloudflare/workers-types": "^4.20260405.1"
   },
   "pipeworx": {
-    "sourceHash": "v1-a33d6c643592db7abd69e1ec450976f619adf9febfc36e71b65e3ad1cd130b54",
-    "sourceCommit": "be47827ad0f444e813e7224db0489c4ea890a30e"
+    "sourceHash": "v1-3de59b83ae5777ecc67f35d289d7ba5aef59d054364b6e0e31678cce256a88f9",
+    "sourceCommit": "051ee2039fc96224cb5b7358fd69d525bced13a6"
   }
 }
