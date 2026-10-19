@@ -1,7 +1,7 @@
 {
   "name": "@pipeworx/mcp-alabama-code",
-  "version": "0.1.1",
-  "description": "Code of Alabama 1975 — state statutes by citation and by topic.",
+  "version": "0.1.2",
+  "description": "Code of Alabama 1975 — state statutes by citation and by topic. Fleet #2752. Query-arg fix: fleet #2901.",
   "type": "module",
   "main": "src/index.ts",
   "types": "src/index.ts",
@@ -26,7 +26,7 @@
     "@cloudflare/workers-types": "^4.20260405.1"
   },
   "pipeworx": {
-    "sourceHash": "v1-3de59b83ae5777ecc67f35d289d7ba5aef59d054364b6e0e31678cce256a88f9",
-    "sourceCommit": "051ee2039fc96224cb5b7358fd69d525bced13a6"
+    "sourceHash": "v1-8da086fa22c83c7460f2e1bcf63b0e4171b4d00c11c3d09f6a6d13f776b70572",
+    "sourceCommit": "351c40908821cfecc9bb2f5849d87bbfdbb26d75"
   }
 }
